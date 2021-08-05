@@ -42,7 +42,7 @@ const resolvers: Resolvers = {
       } catch (e) {
         return {
           ok: false,
-          error: console.log("Can't create account.", e),
+          error: console.log("계정을 만들 수 없습니다.", e),
         };
       }
     },
