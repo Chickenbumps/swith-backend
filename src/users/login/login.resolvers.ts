@@ -11,7 +11,7 @@ const resolvers: Resolvers = {
         if (!user) {
           return {
             ok: false,
-            error: "존재하지 않은 아이디 입니다.",
+            error: "존재하지 않는 아이디 입니다.",
           };
         }
         const passwordCheck = await bcrypt.compare(password, user.password);
@@ -22,6 +22,7 @@ const resolvers: Resolvers = {
           };
         }
         const token = jwt.sign({ id: user.id }, process.env.PRIVATE_KEY);
+
         return {
           ok: true,
           token,
