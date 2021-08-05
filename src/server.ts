@@ -23,7 +23,7 @@ async function startServer() {
     },
   });
   await server.start();
-  app.use(logger("tiny"));
+  app.use(logger("dev"));
   app.use(graphqlUploadExpress());
   server.applyMiddleware({ app });
   app.listen({ port: PORT }, () => {
