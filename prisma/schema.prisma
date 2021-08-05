@@ -23,14 +23,16 @@ model User {
   following  User[]    @relation("FollowRelation", references: [id])
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  rank       String?
-  todayTime  String?
-  weekTime   String?
-  monthTime  String?
-  totalTime  String?
+  rank       String?   @default("Bronze")
+  todayTime  Int?      @default(0)
+  weekTime   Int?      @default(0)
+  monthTime  Int?      @default(0)
+  totalTime  Int?      @default(0)
   observer   Observer? @relation(fields: [observerId], references: [id])
   Comment    Comment[]
   observerId Int?
+  exp        Int?      @default(0)
+  maxExp     Int?      @default(10)
 }
 
 model Observer {

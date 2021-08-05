@@ -16,5 +16,12 @@ export default gql`
     totalFollowing: Int!
     isMe: Boolean!
     isFollowing: Boolean!
+    rank: String
+    exp: Int
+    maxExp: Int
+    todayTime: String
+    weekTime: String
+    monthTime: String
+    totalTime: String
   }
 `;
