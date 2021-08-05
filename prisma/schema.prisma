@@ -11,17 +11,38 @@ generator client {
 }
 
 model User {
+  id         Int       @id @default(autoincrement())
+  firstName  String
+  lastName   String?
+  username   String    @unique
+  email      String    @unique
+  password   String
+  bio        String?
+  avatar     String?
+  followers  User[]    @relation("FollowRelation", references: [id])
+  following  User[]    @relation("FollowRelation", references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  rank       String?
+  todayTime  String?
+  weekTime   String?
+  monthTime  String?
+  totalTime  String?
+  observer   Observer? @relation(fields: [observerId], references: [id])
+  Comment    Comment[]
+  observerId Int?
+}
+
+model Observer {
+  id   Int    @id @default(autoincrement())
+  User User[]
+}
+
+model Comment {
   id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String?
-  username  String   @unique
-  email     String   @unique
-  password  String
-  bio       String?
-  avatar    String?
-  followers User[]   @relation("FollowRelation", references: [id])
-  following User[]   @relation("FollowRelation", references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  payload   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  rank      String
 }
