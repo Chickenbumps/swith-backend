@@ -34,8 +34,8 @@ model User {
 }
 
 model Observer {
-  id   Int    @id @default(autoincrement())
-  User User[]
+  id      Int    @id @default(autoincrement())
+  subject User[]
 }
 
 model Comment {
