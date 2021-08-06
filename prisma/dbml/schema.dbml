@@ -1,0 +1,93 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id Int [pk, increment]
+  firstName String [not null]
+  lastName String
+  username String [unique, not null]
+  email String [unique, not null]
+  password String [not null]
+  bio String
+  avatar String
+  followers User [not null, note: '@onDelete(CASACADE)']
+  following User [not null, note: '@onDelete(CASACADE)']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  rank String [default: 'Bronze']
+  todayTime Int [default: 0]
+  weekTime Int [default: 0]
+  monthTime Int [default: 0]
+  totalTime Int [default: 0]
+  observer Observer
+  comments Comment [not null, note: '@onDelete(CASACADE)']
+  observerId Int [unique]
+  exp Int [default: 0]
+  maxExp Int [default: 10]
+  groups Group [not null]
+  messages Message [not null, note: '@onDelete(CASACADE)']
+  inviter Inviter [note: '@onDelete(CASACADE)']
+}
+
+Table Observer {
+  id Int [pk, increment]
+  subjects User [not null]
+}
+
+Table Comment {
+  id Int [pk, increment]
+  user User [not null]
+  userId Int [unique, not null]
+  payload String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Message {
+  id Int [pk, increment]
+  paylaod String [not null]
+  user User [not null]
+  userId Int [not null]
+  group Group [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  groupId Int [not null]
+  read Boolean [not null, default: false]
+}
+
+Table Group {
+  id Int [pk, increment]
+  title String [not null]
+  description String
+  members User [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  messages Message [not null, note: '@onDelete(CASACADE)']
+  inviter Inviter [not null]
+  inviterId Int [not null]
+}
+
+Table Inviter {
+  id Int [pk, increment]
+  user User [not null]
+  userId Int [not null]
+  Group Group [not null]
+}
+
+Table FollowRelation {
+  followersId Int [ref: > User.id]
+  followingId Int [ref: > User.id]
+}
+
+Ref: User.observerId > Observer.id
+
+Ref: Comment.userId > User.id
+
+Ref: Message.userId > User.id
+
+Ref: Message.groupId > Group.id
+
+Ref: Group.inviterId > Inviter.id
+
+Ref: Inviter.userId - User.id
