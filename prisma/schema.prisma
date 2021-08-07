@@ -60,7 +60,7 @@ model Comment {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  paylaod   String
+  payload   String
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
   group     Group    @relation(fields: [groupId], references: [id])

@@ -45,5 +45,26 @@ const resolvers: Resolvers = {
         },
       });
     },
+    inviter: async ({ id }, _, { client, loggedInUser }) => {
+      const inviterInfo = await client.group
+        .findFirst({
+          where: {
+            id,
+          },
+        })
+        .inviter();
+      const inviter = await client.inviter.findFirst({
+        where: {
+          id: inviterInfo.id,
+        },
+        include: {
+          user: true,
+        },
+      });
+      console.log(inviter);
+      return inviter;
+    },
   },
 };
+
+export default resolvers;

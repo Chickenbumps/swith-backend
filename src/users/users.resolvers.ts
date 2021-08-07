@@ -53,23 +53,7 @@ const resolvers: Resolvers = {
       return Boolean(exists);
     },
     rank: (_, __, { client, loggedInUser }) => {
-      if (!loggedInUser) {
-        return null;
-      }
-      if (loggedInUser.exp === loggedInUser.maxExp) {
-        if (loggedInUser.rank === "Bronze") {
-          loggedInUser.exp = 0;
-          loggedInUser.maxExp = 50;
-          return "Silver";
-        } else if (loggedInUser.rank === "Silver") {
-          loggedInUser.exp = 0;
-          loggedInUser.maxExp = 100;
-          return "Gold";
-        } else if (loggedInUser.rank === "Gold") {
-          loggedInUser.exp = 0;
-          loggedInUser.maxExp = 200;
-        }
-      }
+      return "not yet";
     },
   },
 };

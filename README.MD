@@ -9,6 +9,9 @@
 [o] createAccount
 [o] login
 [o] seeProfile
-[o] editProfile
+[o] editProfile // avatar 바꿀때 s3내 파일지우기.
 [o] isMe
 [o] followToggle
+[o] searchUser
+[o] createGroup
+[o] updateGroup
