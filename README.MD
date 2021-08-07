@@ -13,5 +13,11 @@
 [o] isMe
 [o] followToggle
 [o] searchUser
+
+## Group
+
 [o] createGroup
 [o] updateGroup
+[o] sendMessage
+[o] seeGroup
+[o] seeGroups
