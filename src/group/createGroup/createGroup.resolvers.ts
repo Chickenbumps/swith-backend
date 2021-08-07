@@ -15,13 +15,8 @@ const resolvers: Resolvers = {
               },
             },
             inviter: {
-              connectOrCreate: {
-                create: {
-                  userId: loggedInUser.id,
-                },
-                where: {
-                  id: loggedInUser.id,
-                },
+              connect: {
+                userId: loggedInUser.id,
               },
             },
           },
@@ -37,3 +32,12 @@ const resolvers: Resolvers = {
 };
 
 export default resolvers;
+
+// connectOrCreate: {
+//   create: {
+//     userId: loggedInUser.id,
+//   },
+//   where: {
+//     id: loggedInUser.id,
+//   },
+// },

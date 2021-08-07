@@ -11,6 +11,12 @@ export default gql`
     read: Boolean
   }
 
+  type Inviter {
+    id: Int!
+    user: User!
+    Group: [Group]
+  }
+
   type Group {
     id: Int!
     title: String!
@@ -18,5 +24,6 @@ export default gql`
     members: [User]!
     messages: [Message]
     unreadMessage: Int!
+    inviter: Inviter!
   }
 `;

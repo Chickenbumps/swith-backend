@@ -80,7 +80,7 @@ model Group {
   /// @onDelete(CASACADE)
   messages    Message[]
   inviter     Inviter   @relation(fields: [inviterId], references: [id])
-  inviterId   Int       @unique
+  inviterId   Int
 }
 
 model Inviter {
