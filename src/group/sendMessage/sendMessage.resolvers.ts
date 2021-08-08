@@ -29,7 +29,7 @@ const resolvers: Resolvers = {
             error: "메시지를 보낼 수 없습니다. 그룹에 속한 멤버가 아닙니다.",
           };
         }
-        console.log(group);
+
         await client.message.create({
           data: {
             payload,

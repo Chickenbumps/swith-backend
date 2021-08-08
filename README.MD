@@ -23,8 +23,8 @@
 [o] seeGroup
 [o] seeGroups
 [o] searchGroups
-[] kickMember
-[] readMessage
+[o] kickMember
+[o] readMessage
 
 ## Comment
 
