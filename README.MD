@@ -28,6 +28,6 @@
 
 ## Comment
 
-[] createComment
-[] deleteComment
-[] editComment
+[o] createComment
+[o] deleteComment
+[o] editComment

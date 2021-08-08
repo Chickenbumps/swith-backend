@@ -1,3 +1,4 @@
+import { time } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 
@@ -48,6 +49,7 @@ const resolvers: Resolvers = {
                 id: memberId,
               },
             },
+            updatedAt: time(),
           },
         });
         return {

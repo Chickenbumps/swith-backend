@@ -1,6 +1,8 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
+  scalar DateTime
+
   type Group {
     id: Int!
     title: String!
@@ -16,8 +18,8 @@ export default gql`
     payload: String!
     user: User!
     group: Group!
-    createdAt: String!
-    updatedAt: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
     read: Boolean
   }
 

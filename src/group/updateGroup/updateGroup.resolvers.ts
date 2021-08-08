@@ -1,3 +1,4 @@
+import { time } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 
@@ -77,6 +78,7 @@ const resolvers: Resolvers = {
                     id: invitee.id,
                   },
                 },
+                updatedAt: time(),
               },
             });
             return {
@@ -91,6 +93,7 @@ const resolvers: Resolvers = {
           data: {
             title: title ?? group.title,
             description: description ?? group.description,
+            updatedAt: time(),
           },
         });
         return {

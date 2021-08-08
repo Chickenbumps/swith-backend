@@ -22,7 +22,6 @@ const resolvers: Resolvers = {
           };
         }
         const token = jwt.sign({ id: user.id }, process.env.PRIVATE_KEY);
-
         return {
           ok: true,
           token,

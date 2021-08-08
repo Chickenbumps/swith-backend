@@ -24,9 +24,7 @@ const resolvers: Resolvers = {
         } else if (emailCheck) {
           throw new Error("이미 가입된 이메일 입니다.");
         }
-        const saltRounds = 10;
-        const salt = await bcrypt.genSalt(saltRounds);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const hashedPassword = await bcrypt.hash(password, 10);
         await client.user.create({
           data: {
             firstName,

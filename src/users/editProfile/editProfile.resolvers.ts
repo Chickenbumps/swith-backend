@@ -19,10 +19,8 @@ const resolvers: Resolvers = {
 
         let newEncryptedPassword = null;
         if (password) {
-          const salt = await bcrypt.genSalt(10);
-          const newEncryptedPassword = await bcrypt.hash(password, salt);
+          newEncryptedPassword = await bcrypt.hash(password, 10);
         }
-
         const editedUser = await client.user.update({
           where: {
             id: loggedInUser.id,
@@ -31,9 +29,9 @@ const resolvers: Resolvers = {
             firstName,
             lastName,
             username,
-            password: newEncryptedPassword ?? password,
+            ...(newEncryptedPassword && { password: newEncryptedPassword }),
             bio,
-            avatar: newAvatarUri ?? avatar,
+            ...(newAvatarUri && { avatar: newAvatarUri }),
           },
         });
         if (editedUser) {
