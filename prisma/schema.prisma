@@ -42,11 +42,13 @@ model User {
   messages   Message[]
   /// @onDelete(CASACADE)
   inviter    Inviter?
+
 }
 
 model Observer {
-  id       Int    @id @default(autoincrement())
-  subjects User[]
+  id     Int   @id @default(autoincrement())
+  user   User?
+  userId Int   @unique
 }
 
 model Comment {
