@@ -1,5 +1,7 @@
+import pubsub from "../../pubsub";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
+import { NEW_MESSAGE } from "../../variables";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -30,7 +32,7 @@ const resolvers: Resolvers = {
           };
         }
 
-        await client.message.create({
+        const message = await client.message.create({
           data: {
             payload,
             group: {
@@ -45,6 +47,7 @@ const resolvers: Resolvers = {
             },
           },
         });
+        pubsub.publish(NEW_MESSAGE, { updateMessage: { ...message } });
         return {
           ok: true,
         };
