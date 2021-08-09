@@ -28,6 +28,9 @@ const resolvers: Resolvers = {
           where: {
             id: groupId,
           },
+          include: {
+            inviter: true,
+          },
         });
         if (!group) {
           return {
@@ -37,11 +40,7 @@ const resolvers: Resolvers = {
         }
 
         // 그룹주인이 아닌 경우 (권한 없음)
-        const isInviter = await client.inviter.findUnique({
-          where: {
-            userId: loggedInUser.id,
-          },
-        });
+        const isInviter = group.inviter.userId === loggedInUser.id;
         if (!isInviter) {
           return {
             ok: false,
@@ -51,13 +50,17 @@ const resolvers: Resolvers = {
 
         if (inviteeName) {
           // 이미 그룹에 속해있는 경우
-          const alreadyMember = await client.group
-            .findUnique({
-              where: {
-                id: invitee.id,
+          const alreadyMember = await client.group.findFirst({
+            where: {
+              id: groupId,
+              members: {
+                some: {
+                  id: invitee.id,
+                },
               },
-            })
-            .members();
+            },
+          });
+
           if (alreadyMember) {
             return {
               ok: false,

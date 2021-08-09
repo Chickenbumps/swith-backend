@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
     editProfile: securedResolver(
       async (
         _,
-        { firstName, lastName, username, password, bio, avatar },
+        { name, username, password, bio, avatar },
         { loggedInUser, client }
       ) => {
         // avatar edit
@@ -26,8 +26,7 @@ const resolvers: Resolvers = {
             id: loggedInUser.id,
           },
           data: {
-            firstName,
-            lastName,
+            name,
             username,
             ...(newEncryptedPassword && { password: newEncryptedPassword }),
             bio,

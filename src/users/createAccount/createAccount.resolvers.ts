@@ -6,7 +6,7 @@ const resolvers: Resolvers = {
   Mutation: {
     createAccount: async (
       _,
-      { firstName, lastName, username, email, password }
+      { name, username, email, password, passwordConfirm }
     ) => {
       try {
         const usernameCheck = await client.user.findFirst({
@@ -24,11 +24,16 @@ const resolvers: Resolvers = {
         } else if (emailCheck) {
           throw new Error("이미 가입된 이메일 입니다.");
         }
+        if (password !== passwordConfirm) {
+          return {
+            ok: false,
+            error: "비밀번호가 일치하지 않습니다.",
+          };
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         await client.user.create({
           data: {
-            firstName,
-            lastName,
+            name,
             username,
             email,
             password: hashedPassword,
