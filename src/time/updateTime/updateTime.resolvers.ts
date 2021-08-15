@@ -1,34 +1,59 @@
 import { currentTime } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
-import { securedResolver } from "../users.utils";
-
+import { securedResolver } from "../../users/users.utils";
+import moment from "moment";
 const resolvers: Resolvers = {
   Mutation: {
     updateTime: securedResolver(
       async (_, { time }, { client, loggedInUser }) => {
-        let year = new Date().getFullYear();
-        let month = new Date().getMonth();
-        let date = new Date().getDate();
-        let todayNum = new Date().getDay();
-        let todayString = new Intl.DateTimeFormat("en-US", {
-          weekday: "long",
-        }).format(todayNum);
+        // 지난주 데이터 만들기
+        let dayCount = 7;
+        while (dayCount > 0) {
+          const isExist = await client.time.findFirst({
+            where: {
+              userId: loggedInUser.id,
+              updatedAt: moment().subtract(dayCount, "days").format("YYYYMMDD"),
+            },
+          });
+          console.log("isExist:", isExist);
+          if (!isExist) {
+            await client.time.create({
+              data: {
+                dayName: moment().subtract(dayCount, "day").format("dddd"),
+                createdAt: moment()
+                  .subtract(dayCount, "days")
+                  .format("YYYYMMDD"),
+                updatedAt: moment()
+                  .subtract(dayCount, "days")
+                  .format("YYYYMMDD"),
+                user: {
+                  connect: {
+                    id: loggedInUser.id,
+                  },
+                },
+                timeValue: 0,
+              },
+            });
+          }
+          dayCount--;
+        }
+
         const timeArr = await client.time.findMany({
           where: {
             userId: loggedInUser.id,
-            dayName: todayString,
+            dayName: moment().format("dddd"),
           },
         });
         const todayTime = timeArr.find(
-          (time) => time.updatedAt === new Date().toLocaleDateString()
+          (time) => time.updatedAt === moment().format("YYYYMMDD")
         );
 
         if (!todayTime) {
           await client.time.create({
             data: {
-              dayName: todayString,
-              createdAt: new Date().toLocaleDateString(),
-              updatedAt: new Date().toLocaleDateString(),
+              dayName: moment().format("dddd"),
+              createdAt: moment().format("YYYYMMDD"),
+              updatedAt: moment().format("YYYYMMDD"),
               user: {
                 connect: {
                   id: loggedInUser.id,
@@ -43,7 +68,7 @@ const resolvers: Resolvers = {
               id: todayTime.id,
             },
             data: {
-              updatedAt: new Date().toLocaleDateString(),
+              updatedAt: moment().format("YYYYMMDD"),
               timeValue: {
                 increment: time,
               },
@@ -51,13 +76,13 @@ const resolvers: Resolvers = {
           });
         }
         // 날짜 달라진 경우. todayTime 초기화
-        if (todayNum !== loggedInUser.updatedAt.getDay()) {
+        if (moment().day() !== loggedInUser.updatedAt.getDay()) {
           client.user.update({
             where: {
               id: loggedInUser.id,
             },
             data: {
-              updatedAt: new Date().toLocaleDateString(),
+              updatedAt: currentTime(),
               todayTime: 0,
             },
           });

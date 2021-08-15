@@ -18,20 +18,20 @@ export default gql`
     isMe: Boolean!
     isFollowing: Boolean!
     rank: String
-    exp: Int
-    maxExp: Int
+    exp: Float
+    maxExp: Float
     time: [Time]
-    todayTime: Int
-    weekTime: Int
-    monthTime: Int
-    totalTime: Int
+    todayTime: Float
+    weekTime: Float
+    monthTime: Float
+    totalTime: Float
   }
   type Time {
     id: Int!
-    timeValue: Int!
+    timeValue: Float!
     user: User
-    createdAt: DateTime
-    updatedAt: DateTime!
+    createdAt: String
+    updatedAt: String!
     dayName: String!
   }
 `;

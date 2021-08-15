@@ -2,12 +2,14 @@ import { Resolvers } from "../../types";
 
 const resolvers: Resolvers = {
   Query: {
-    seeTime: (_, { day }, { client, loggedInUser }) => {
-      client.time.findFirst({
+    seeTime: async (_, { day }, { client, loggedInUser }) => {
+      const time = await client.time.findFirst({
         where: {
           userId: loggedInUser.id,
+          updatedAt: day,
         },
       });
+      return time;
     },
   },
 };

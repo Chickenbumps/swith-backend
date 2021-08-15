@@ -26,16 +26,16 @@ model User {
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   rank       String?   @default("Bronze")
-  todayTime  Int?
-  weekTime   Int?
-  monthTime  Int?
-  totalTime  Int?
+  todayTime  Float?
+  weekTime   Float?
+  monthTime  Float?
+  totalTime  Float?
   observer   Observer? @relation(fields: [observerId], references: [id])
   /// @onDelete(CASACADE)
   comments   Comment[]
   observerId Int?      @unique
-  exp        Int?      @default(0)
-  maxExp     Int?      @default(10)
+  exp        Float?    @default(0)
+  maxExp     Float?    @default(10)
   groups     Group[]
   /// @onDelete(CASACADE)
   messages   Message[]
@@ -47,7 +47,7 @@ model User {
 
 model Time {
   id        Int    @id @default(autoincrement())
-  timeValue Int
+  timeValue Float
   user      User   @relation(fields: [userId], references: [id])
   userId    Int
   createdAt String
