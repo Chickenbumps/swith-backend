@@ -25,7 +25,7 @@ export const uploadToS3 = async (fileUri, userId, folderName) => {
   return Location;
 };
 
-export const time = () => {
+export const currentTime = () => {
   let time = new Date();
   time.setHours(time.getHours() + 9);
   return time;

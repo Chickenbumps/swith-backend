@@ -1,3 +1,4 @@
+import { currentTime } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../users.utils";
 
@@ -37,6 +38,7 @@ const resolvers: Resolvers = {
                   username,
                 },
               },
+              updatedAt: currentTime(),
             },
           });
           return {
@@ -54,6 +56,7 @@ const resolvers: Resolvers = {
                 username,
               },
             },
+            updatedAt: currentTime(),
           },
         });
         return {

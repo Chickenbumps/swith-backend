@@ -10,6 +10,7 @@ import { createServer } from "http";
 import { SubscriptionServer } from "subscriptions-transport-ws";
 import { execute, subscribe } from "graphql";
 import { schema } from "./schema";
+import { Context } from "vm";
 
 const PORT = process.env.PORT;
 
@@ -18,9 +19,9 @@ const PORT = process.env.PORT;
   const httpServer = createServer(app);
   const server = new ApolloServer({
     schema,
-    context: async (context) => {
+    context: async ({ req }): Promise<Context> => {
       return {
-        loggedInUser: await getUser(context.req.headers.token),
+        loggedInUser: await getUser(req.headers.token),
         client: client,
       };
     },

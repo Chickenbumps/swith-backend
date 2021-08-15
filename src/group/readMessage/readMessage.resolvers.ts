@@ -1,3 +1,4 @@
+import { currentTime } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 
@@ -11,6 +12,7 @@ const resolvers: Resolvers = {
           },
           data: {
             read: true,
+            updatedAt: currentTime(),
           },
         });
         if (!readMessage) {

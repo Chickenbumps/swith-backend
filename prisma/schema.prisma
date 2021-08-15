@@ -26,10 +26,10 @@ model User {
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   rank       String?   @default("Bronze")
-  todayTime  Int?      @default(0)
-  weekTime   Int?      @default(0)
-  monthTime  Int?      @default(0)
-  totalTime  Int?      @default(0)
+  todayTime  Int?
+  weekTime   Int?
+  monthTime  Int?
+  totalTime  Int?
   observer   Observer? @relation(fields: [observerId], references: [id])
   /// @onDelete(CASACADE)
   comments   Comment[]
@@ -41,7 +41,18 @@ model User {
   messages   Message[]
   /// @onDelete(CASACADE)
   inviter    Inviter?
+  /// @onDelete(CASACADE)
+  time       Time[]
+}
 
+model Time {
+  id        Int    @id @default(autoincrement())
+  timeValue Int
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt String
+  updatedAt String
+  dayName   String
 }
 
 model Observer {
@@ -80,7 +91,6 @@ model Group {
   updatedAt   DateTime  @updatedAt
   /// @onDelete(CASACADE)
   messages    Message[]
-  /// @onDelete(CASACADE)
   inviter     Inviter   @relation(fields: [inviterId], references: [id])
   inviterId   Int
 }

@@ -20,9 +20,18 @@ export default gql`
     rank: String
     exp: Int
     maxExp: Int
-    todayTime: String
-    weekTime: String
-    monthTime: String
-    totalTime: String
+    time: [Time]
+    todayTime: Int
+    weekTime: Int
+    monthTime: Int
+    totalTime: Int
+  }
+  type Time {
+    id: Int!
+    timeValue: Int!
+    user: User
+    createdAt: DateTime
+    updatedAt: DateTime!
+    dayName: String!
   }
 `;

@@ -52,9 +52,6 @@ const resolvers: Resolvers = {
       });
       return Boolean(exists);
     },
-    rank: (_, __, { client, loggedInUser }) => {
-      return "not yet";
-    },
   },
 };
 
