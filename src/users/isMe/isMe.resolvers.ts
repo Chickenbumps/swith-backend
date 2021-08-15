@@ -11,7 +11,7 @@ const resolvers: Resolvers = {
           id: loggedInUser.id,
         },
       });
-      const today = new Date().getDay();
+      const today = currentTime().getDay();
       if (me.updatedAt.getDay() !== today) {
         await client.user.update({
           where: {
