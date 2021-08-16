@@ -1,4 +1,4 @@
-import { currentTime } from "../../shared/shared.utils";
+import moment from "moment";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../users.utils";
 
@@ -11,7 +11,7 @@ const resolvers: Resolvers = {
         },
         data: {
           exp: exp + loggedInUser.exp,
-          updatedAt: currentTime(),
+          updatedAt: moment().format(),
         },
       });
 

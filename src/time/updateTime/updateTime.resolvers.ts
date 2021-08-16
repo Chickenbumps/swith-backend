@@ -1,4 +1,3 @@
-import { currentTime } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 import moment from "moment";
@@ -31,7 +30,6 @@ const resolvers: Resolvers = {
                     id: loggedInUser.id,
                   },
                 },
-                timeValue: 0,
               },
             });
           }
@@ -60,6 +58,7 @@ const resolvers: Resolvers = {
                 },
               },
               timeValue: time,
+              timeNumber: 1,
             },
           });
         } else {
@@ -72,6 +71,9 @@ const resolvers: Resolvers = {
               timeValue: {
                 increment: time,
               },
+              timeNumber: {
+                increment: 1,
+              },
             },
           });
         }
@@ -82,12 +84,13 @@ const resolvers: Resolvers = {
               id: loggedInUser.id,
             },
             data: {
-              updatedAt: currentTime(),
+              updatedAt: moment().format(),
               todayTime: 0,
             },
           });
         }
 
+        // todayTime,totalTime  computed field 로 할지 말지 고민.
         const user = await client.user.update({
           where: {
             id: loggedInUser.id,
@@ -96,9 +99,12 @@ const resolvers: Resolvers = {
             todayTime: {
               increment: time,
             },
-            updatedAt: currentTime(),
+            updatedAt: moment().format(),
             totalTime: {
               increment: time,
+            },
+            totalNumberOfTime: {
+              increment: 1,
             },
           },
         });

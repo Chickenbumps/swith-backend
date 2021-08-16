@@ -25,7 +25,6 @@ const resolvers: Resolvers = {
             updatedAt: "asc",
           },
         });
-        console.log("array", timeArray);
         return timeArray;
       }
     ),

@@ -25,6 +25,9 @@ export default gql`
     weekTime: Float
     monthTime: Float
     totalTime: Float
+    totalNumberOfTime: Float
+    timePerNumber: Float
+    numberPerTime: Float
   }
   type Time {
     id: Int!

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "numberPerTime" DOUBLE PRECISION DEFAULT 0,
+ADD COLUMN     "timePerNumber" DOUBLE PRECISION DEFAULT 0;

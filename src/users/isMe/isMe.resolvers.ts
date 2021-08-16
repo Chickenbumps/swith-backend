@@ -1,8 +1,6 @@
-import client from "../../client";
-import { currentTime } from "../../shared/shared.utils";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../users.utils";
-
+import moment from "moment";
 const resolvers: Resolvers = {
   Query: {
     isMe: securedResolver(async (_, __, { client, loggedInUser }) => {
@@ -11,15 +9,15 @@ const resolvers: Resolvers = {
           id: loggedInUser.id,
         },
       });
-      const today = currentTime().getDay();
-      if (me.updatedAt.getDay() !== today) {
+
+      if (me.updatedAt.getDay() !== moment().day()) {
         await client.user.update({
           where: {
             id: loggedInUser.id,
           },
           data: {
             todayTime: 0,
-            updatedAt: currentTime(),
+            updatedAt: moment().format(),
           },
         });
       }

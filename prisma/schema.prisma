@@ -12,47 +12,47 @@ generator client {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  name       String
-  username   String    @unique
-  email      String    @unique
-  password   String
-  bio        String?
-  avatar     String?
+  id                Int       @id @default(autoincrement())
+  name              String
+  username          String    @unique
+  email             String    @unique
+  password          String
+  bio               String?
+  avatar            String?
+  followers         User[]    @relation("FollowRelation", references: [id])
+  following         User[]    @relation("FollowRelation", references: [id])
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  rank              String?   @default("Bronze")
+  todayTime         Float?
+  weekTime          Float?
+  monthTime         Float?
+  totalTime         Float?
+  totalNumberOfTime Float?    @default(0)
+  observer          Observer? @relation(fields: [observerId], references: [id])
   /// @onDelete(CASACADE)
-  followers  User[]    @relation("FollowRelation", references: [id])
+  comments          Comment[]
+  observerId        Int?      @unique
+  exp               Float?    @default(0)
+  maxExp            Float?    @default(10)
+  groups            Group[]
   /// @onDelete(CASACADE)
-  following  User[]    @relation("FollowRelation", references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  rank       String?   @default("Bronze")
-  todayTime  Float?
-  weekTime   Float?
-  monthTime  Float?
-  totalTime  Float?
-  observer   Observer? @relation(fields: [observerId], references: [id])
+  messages          Message[]
   /// @onDelete(CASACADE)
-  comments   Comment[]
-  observerId Int?      @unique
-  exp        Float?    @default(0)
-  maxExp     Float?    @default(10)
-  groups     Group[]
+  inviter           Inviter?
   /// @onDelete(CASACADE)
-  messages   Message[]
-  /// @onDelete(CASACADE)
-  inviter    Inviter?
-  /// @onDelete(CASACADE)
-  time       Time[]
+  time              Time[]
 }
 
 model Time {
-  id        Int    @id @default(autoincrement())
-  timeValue Float
-  user      User   @relation(fields: [userId], references: [id])
-  userId    Int
-  createdAt String
-  updatedAt String
-  dayName   String
+  id         Int    @id @default(autoincrement())
+  timeValue  Float  @default(0)
+  timeNumber Int    @default(0)
+  user       User   @relation(fields: [userId], references: [id])
+  userId     Int
+  createdAt  String
+  updatedAt  String
+  dayName    String
 }
 
 model Observer {

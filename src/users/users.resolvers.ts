@@ -52,6 +52,22 @@ const resolvers: Resolvers = {
       });
       return Boolean(exists);
     },
+    timePerNumber: ({ id }, _, { client, loggedInUser }) => {
+      if (!loggedInUser) {
+        return false;
+      }
+      return (loggedInUser.totalTime / loggedInUser.totalNumberOfTime).toFixed(
+        2
+      );
+    },
+    numberPerTime: ({ id }, _, { client, loggedInUser }) => {
+      if (!loggedInUser) {
+        return false;
+      }
+      return (loggedInUser.totalNumberOfTime / loggedInUser.totalTime).toFixed(
+        2
+      );
+    },
   },
 };
 
