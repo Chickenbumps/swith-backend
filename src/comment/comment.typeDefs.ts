@@ -6,7 +6,7 @@ export default gql`
     user: User!
     payload: String!
     isMine: Boolean!
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    createdAt: String!
+    updatedAt: String!
   }
 `;

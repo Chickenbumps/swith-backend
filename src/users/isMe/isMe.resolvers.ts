@@ -9,7 +9,8 @@ const resolvers: Resolvers = {
           id: loggedInUser.id,
         },
       });
-
+      // console.log(me.updatedAt, moment().format());
+      // console.log(me.updatedAt.getDay(), moment().day());
       if (me.updatedAt.getDay() !== moment().day()) {
         await client.user.update({
           where: {

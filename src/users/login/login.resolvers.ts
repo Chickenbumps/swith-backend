@@ -11,14 +11,15 @@ const resolvers: Resolvers = {
         if (!user) {
           return {
             ok: false,
-            error: "존재하지 않는 아이디 입니다.",
+            error: "가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.",
           };
         }
         const passwordCheck = await bcrypt.compare(password, user.password);
+        console.log(user, passwordCheck);
         if (!passwordCheck) {
           return {
             ok: false,
-            error: "비밀번호가 일치하지 않습니다.",
+            error: "가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.",
           };
         }
         const token = jwt.sign({ id: user.id }, process.env.PRIVATE_KEY);

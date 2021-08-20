@@ -1,3 +1,4 @@
+import moment from "moment";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 
@@ -5,6 +6,12 @@ const resolvers: Resolvers = {
   Mutation: {
     createComment: securedResolver(
       async (_, { payload }, { client, loggedInUser }) => {
+        if (!payload) {
+          return {
+            ok: false,
+            error: "내용을 입력해주세요.",
+          };
+        }
         const comment = await client.comment.create({
           data: {
             payload: payload,
@@ -13,6 +20,8 @@ const resolvers: Resolvers = {
                 id: loggedInUser.id,
               },
             },
+            createdAt: moment().format("YYYY-MM-DD"),
+            updatedAt: moment().format("YYYY-MM-DD"),
           },
         });
         if (!comment) {
