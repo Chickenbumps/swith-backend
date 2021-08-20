@@ -78,7 +78,10 @@ const resolvers: Resolvers = {
           });
         }
         // 날짜 달라진 경우. todayTime 초기화
-        if (moment().day() !== loggedInUser.updatedAt.getDay()) {
+        if (
+          loggedInUser.updatedAt.toISOString().slice(8, 10) !==
+          moment().date().toString()
+        ) {
           client.user.update({
             where: {
               id: loggedInUser.id,
