@@ -1,9 +1,8 @@
 import { Resolvers } from "../../types";
 import { securedResolver } from "../users.utils";
 import moment from "moment";
-import "moment/locale/ko";
-moment.locale("ko");
-
+moment.locale();
+console.log(moment.locale());
 const resolvers: Resolvers = {
   Query: {
     isMe: securedResolver(async (_, __, { client, loggedInUser }) => {

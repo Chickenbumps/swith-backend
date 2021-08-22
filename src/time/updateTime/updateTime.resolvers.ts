@@ -1,6 +1,7 @@
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 import moment from "moment";
+moment.locale();
 const resolvers: Resolvers = {
   Mutation: {
     updateTime: securedResolver(
