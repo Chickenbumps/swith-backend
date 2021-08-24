@@ -2,7 +2,6 @@ import { Resolvers } from "../../types";
 import { securedResolver } from "../users.utils";
 import moment from "moment";
 moment.locale();
-console.log(moment.locale());
 const resolvers: Resolvers = {
   Query: {
     isMe: securedResolver(async (_, __, { client, loggedInUser }) => {
@@ -10,12 +9,14 @@ const resolvers: Resolvers = {
         where: {
           id: loggedInUser.id,
         },
+        include: {
+          time: true,
+        },
       });
       console.log(me.updatedAt, moment().format());
       console.log(me.updatedAt.toISOString().slice(8, 10), moment().date());
-      if (
-        me.updatedAt.toISOString().slice(8, 10) !== moment().date().toString()
-      ) {
+      const meDate = me.updatedAt.toISOString().slice(8, 10);
+      if (meDate !== moment().date().toString()) {
         await client.user.update({
           where: {
             id: loggedInUser.id,
