@@ -11,10 +11,11 @@ const resolvers: Resolvers = {
         },
         include: {
           time: true,
+          observers: true,
         },
       });
-      console.log(me.updatedAt, moment().format());
-      console.log(me.updatedAt.toISOString().slice(8, 10), moment().date());
+      // console.log(me.updatedAt, moment().format());
+      // console.log(me.updatedAt.toISOString().slice(8, 10), moment().date());
       const meDate = me.updatedAt.toISOString().slice(8, 10);
       if (meDate !== moment().date().toString()) {
         await client.user.update({

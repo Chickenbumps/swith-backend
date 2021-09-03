@@ -5,55 +5,68 @@ import { securedResolver } from "../users.utils";
 const resolvers: Resolvers = {
   Mutation: {
     selectObserver: securedResolver(
-      async (_, { groupId, username }, { client, loggedInUser }) => {
-        const group = await client.group.findFirst({
+      async (_, { username }, { client, loggedInUser }) => {
+        const user = await client.user.findFirst({
           where: {
-            id: groupId,
-            members: {
-              some: {
-                id: loggedInUser.id,
-              },
-            },
-          },
-          include: {
-            members: {
-              where: {
-                NOT: {
-                  id: loggedInUser.id,
-                },
-                AND: {
-                  username: username,
-                },
-              },
-            },
+            username,
           },
         });
-        if (!group.members.length) {
+        const isObserver = await client.user
+          .findFirst({
+            where: {
+              id: loggedInUser.id,
+            },
+          })
+          .observers();
+        const alreadyObserver = isObserver.find(
+          (observer) => observer.username === username
+        );
+        if (alreadyObserver) {
+          const isDisconnect = await client.user.update({
+            where: {
+              id: loggedInUser.id,
+            },
+            data: {
+              observers: {
+                disconnect: {
+                  username,
+                },
+              },
+            },
+          });
+          if (!isDisconnect) {
+            return {
+              ok: false,
+              error: "옵저버 해제를 실패했습니다.",
+            };
+          }
           return {
-            ok: false,
-            error: "그룹에 없는 멤버입니다.감시자로 선택할 수 없습니다.",
+            ok: true,
+            user,
           };
         }
-        await client.user.update({
+        const isOk = await client.user.update({
           where: {
             id: loggedInUser.id,
           },
           data: {
-            observer: {
-              connectOrCreate: {
-                create: {
-                  userId: group.members[0].id,
-                },
-                where: {
-                  id: group.members[0].id,
-                },
+            observers: {
+              connect: {
+                username,
               },
             },
-            updatedAt: moment().format(),
           },
         });
+
+        if (!isOk) {
+          return {
+            ok: false,
+            error: "옵저버 선택을 실패했습니다.",
+          };
+        }
         return {
           ok: true,
+          user,
         };
       }
     ),

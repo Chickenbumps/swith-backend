@@ -16,7 +16,6 @@ const resolvers: Resolvers = {
             },
           },
         });
-        console.log(isIviter);
         if (!isIviter) {
           return {
             ok: false,

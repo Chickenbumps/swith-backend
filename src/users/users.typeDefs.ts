@@ -4,8 +4,8 @@ export default gql`
   type User {
     id: Int!
     name: String!
-    username: String
-    email: String
+    username: String!
+    email: String!
     password: String
     bio: String
     avatar: String
@@ -28,6 +28,9 @@ export default gql`
     totalNumberOfTime: Float
     timePerNumber: Float
     numberPerTime: Float
+    observers: [User]
+    subjects: [User]
+    isObserver: Boolean!
   }
   type Time {
     id: Int!

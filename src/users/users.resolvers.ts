@@ -68,6 +68,17 @@ const resolvers: Resolvers = {
         2
       );
     },
+    isObserver: async ({ id }, _, { client, loggedInUser }) => {
+      const observers = await client.user
+        .findFirst({
+          where: {
+            id: loggedInUser.id,
+          },
+        })
+        .observers();
+      const isExist = observers.some((observer) => observer.id === id);
+      return isExist;
+    },
   },
 };
 

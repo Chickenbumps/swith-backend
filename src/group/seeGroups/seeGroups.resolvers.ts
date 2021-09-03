@@ -3,8 +3,8 @@ import { securedResolver } from "../../users/users.utils";
 
 const resolvers: Resolvers = {
   Query: {
-    seeGroups: securedResolver((_, __, { client, loggedInUser }) =>
-      client.group.findMany({
+    seeGroups: securedResolver(async (_, __, { client, loggedInUser }) => {
+      const groups = await client.group.findMany({
         where: {
           members: {
             some: {
@@ -12,8 +12,20 @@ const resolvers: Resolvers = {
             },
           },
         },
-      })
-    ),
+        include: {
+          members: {
+            orderBy: {
+              username: "asc",
+            },
+            include: {
+              observers: true,
+            },
+          },
+        },
+      });
+      console.log(groups[0].members);
+      return groups;
+    }),
   },
 };
 

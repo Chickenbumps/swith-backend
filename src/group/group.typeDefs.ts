@@ -18,8 +18,8 @@ export default gql`
     payload: String!
     user: User!
     group: Group!
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    createdAt: String!
+    updatedAt: String!
     read: Boolean
   }
 

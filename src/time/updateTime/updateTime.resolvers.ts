@@ -15,7 +15,6 @@ const resolvers: Resolvers = {
               updatedAt: moment().subtract(dayCount, "days").format("YYYYMMDD"),
             },
           });
-          console.log("isExist:", isExist);
           if (!isExist) {
             await client.time.create({
               data: {

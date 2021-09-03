@@ -26,7 +26,6 @@ const resolvers: Resolvers = {
             })
             .following()
         ).map((user) => user.id === targetUser.id);
-        console.log(isFollowing);
         if (!isFollowing.length) {
           await client.user.update({
             where: {

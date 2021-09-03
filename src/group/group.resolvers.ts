@@ -13,22 +13,14 @@ const resolvers: Resolvers = {
         .user(),
   },
   Group: {
-    messages: ({ id }, _, { client }) =>
-      client.group
-        .findUnique({
-          where: {
-            id,
-          },
-        })
-        .messages(),
-    members: ({ id }, _, { client }) =>
-      client.group
-        .findUnique({
-          where: {
-            id,
-          },
-        })
-        .members(),
+    // messages: ({ id }, _, { client }) =>
+    //   client.group
+    //     .findUnique({
+    //       where: {
+    //         id,
+    //       },
+    //     })
+    //     .messages(),
     unreadMessage: ({ id }, _, { client, loggedInUser }) => {
       if (!loggedInUser) {
         return 0;
@@ -61,8 +53,23 @@ const resolvers: Resolvers = {
           user: true,
         },
       });
-      console.log(inviter);
+
       return inviter;
+    },
+  },
+  User: {
+    isObserver: async ({ id }, _, { client, loggedInUser }) => {
+      console.log("id", id);
+      const observers = await client.user
+        .findFirst({
+          where: {
+            id: loggedInUser.id,
+          },
+        })
+        .observers();
+      const isExist = observers.some((observer) => observer.id === id);
+      console.log(isExist);
+      return isExist;
     },
   },
 };

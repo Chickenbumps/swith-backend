@@ -4,8 +4,9 @@ export default gql`
   type SelectObserverResult {
     ok: Boolean!
     error: String
+    user: User
   }
   type Mutation {
-    selectObserver(groupId: Int!, username: String!): SelectObserverResult!
+    selectObserver(username: String!): SelectObserverResult!
   }
 `;

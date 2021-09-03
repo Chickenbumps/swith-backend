@@ -29,10 +29,10 @@ model User {
   monthTime         Float?
   totalTime         Float?
   totalNumberOfTime Float?    @default(0)
-  observer          Observer? @relation(fields: [observerId], references: [id])
+  // @onDelete(CASACADE)
+  observers         User[]    @relation("UserToUser", references: [id])
   /// @onDelete(CASACADE)
   comments          Comment[]
-  observerId        Int?      @unique
   exp               Float?    @default(0)
   maxExp            Float?    @default(10)
   groups            Group[]
@@ -42,6 +42,8 @@ model User {
   inviter           Inviter?
   /// @onDelete(CASACADE)
   time              Time[]
+  subjects          User[]    @relation("UserToUser", references: [id])
+  isObserver        Boolean?  @default(false)
 }
 
 model Time {
@@ -55,11 +57,11 @@ model Time {
   dayName    String
 }
 
-model Observer {
-  id     Int   @id @default(autoincrement())
-  user   User?
-  userId Int
-}
+// model Observer {
+//   id     Int  @id @default(autoincrement())
+//   user   User @relation(fields: [userId], references: [id])
+//   userId Int
+// }
 
 model Comment {
   id        Int    @id @default(autoincrement())
@@ -71,15 +73,15 @@ model Comment {
 }
 
 model Message {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   payload   String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
   userId    Int
-  group     Group    @relation(fields: [groupId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  group     Group   @relation(fields: [groupId], references: [id])
+  createdAt String
+  updatedAt String
   groupId   Int
-  read      Boolean  @default(false)
+  read      Boolean @default(false)
 }
 
 model Group {

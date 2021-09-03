@@ -37,6 +37,8 @@ const resolvers: Resolvers = {
             username,
             email,
             password: hashedPassword,
+            avatar:
+              "https://swith-upload.s3.ap-northeast-2.amazonaws.com/avatar/default.png",
           },
         });
         return {

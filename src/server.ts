@@ -37,6 +37,7 @@ const PORT = process.env.PORT;
       subscribe,
       onConnect: async ({ token }, webSocket, context) => {
         if (!token) {
+          console.log("유효하지 않은 토큰입니다. subscription error.");
           throw new Error("유효하지 않은 토큰입니다. subscription error.");
         }
         const loggedInUser = await getUser(token);

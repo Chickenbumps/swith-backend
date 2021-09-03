@@ -1,8 +1,10 @@
+import moment from "moment";
 import pubsub from "../../pubsub";
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 import { NEW_MESSAGE } from "../../variables";
 
+moment.locale("ko");
 const resolvers: Resolvers = {
   Mutation: {
     sendMessage: securedResolver(
@@ -32,6 +34,7 @@ const resolvers: Resolvers = {
           };
         }
 
+        console.log(moment().format());
         const message = await client.message.create({
           data: {
             payload,
@@ -45,11 +48,14 @@ const resolvers: Resolvers = {
                 id: loggedInUser.id,
               },
             },
+            createdAt: moment().format(),
+            updatedAt: moment().format(),
           },
         });
         pubsub.publish(NEW_MESSAGE, { updateMessage: { ...message } });
         return {
           ok: true,
+          id: message.id,
         };
       }
     ),

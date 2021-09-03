@@ -15,7 +15,6 @@ const resolvers: Resolvers = {
           };
         }
         const passwordCheck = await bcrypt.compare(password, user.password);
-        console.log(user, passwordCheck);
         if (!passwordCheck) {
           return {
             ok: false,
