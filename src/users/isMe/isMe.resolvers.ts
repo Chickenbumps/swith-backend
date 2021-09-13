@@ -1,11 +1,11 @@
 import { Resolvers } from "../../types";
 import { securedResolver } from "../users.utils";
 import moment from "moment";
-moment.locale();
+
 const resolvers: Resolvers = {
   Query: {
     isMe: securedResolver(async (_, __, { client, loggedInUser }) => {
-      const me = await client.user.findUnique({
+      const me = await client.user.findFirst({
         where: {
           id: loggedInUser.id,
         },
@@ -16,7 +16,8 @@ const resolvers: Resolvers = {
       });
       // console.log(me.updatedAt, moment().format());
       // console.log(me.updatedAt.toISOString().slice(8, 10), moment().date());
-      const meDate = me.updatedAt.toISOString().slice(8, 10);
+      const meDate = me.updatedAt.slice(9, 10);
+      // console.log("isMe:", meDate, moment().date());
       if (meDate !== moment().date().toString()) {
         await client.user.update({
           where: {

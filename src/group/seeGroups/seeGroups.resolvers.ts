@@ -23,7 +23,7 @@ const resolvers: Resolvers = {
           },
         },
       });
-      console.log(groups[0].members);
+
       return groups;
     }),
   },

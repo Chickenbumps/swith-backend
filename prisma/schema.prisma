@@ -21,13 +21,13 @@ model User {
   avatar            String?
   followers         User[]    @relation("FollowRelation", references: [id])
   following         User[]    @relation("FollowRelation", references: [id])
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  createdAt         String
+  updatedAt         String
   rank              String?   @default("Bronze")
-  todayTime         Float?
-  weekTime          Float?
-  monthTime         Float?
-  totalTime         Float?
+  todayTime         Float?    @default(0)
+  weekTime          Float?    @default(0)
+  monthTime         Float?    @default(0)
+  totalTime         Float?    @default(0)
   totalNumberOfTime Float?    @default(0)
   // @onDelete(CASACADE)
   observers         User[]    @relation("UserToUser", references: [id])

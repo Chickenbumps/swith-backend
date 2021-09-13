@@ -1,7 +1,7 @@
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 import moment from "moment";
-moment.locale();
+
 const resolvers: Resolvers = {
   Mutation: {
     updateTime: securedResolver(
@@ -78,9 +78,12 @@ const resolvers: Resolvers = {
           });
         }
         // 날짜 달라진 경우. todayTime 초기화
+        // console.log(
+        //   loggedInUser.updatedAt.slice(9, 10),
+        //   moment().date().toString()
+        // );
         if (
-          loggedInUser.updatedAt.toISOString().slice(8, 10) !==
-          moment().date().toString()
+          loggedInUser.updatedAt.slice(9, 10) !== moment().date().toString()
         ) {
           client.user.update({
             where: {
@@ -111,6 +114,7 @@ const resolvers: Resolvers = {
             },
           },
         });
+
         if (!user) {
           return {
             ok: false,

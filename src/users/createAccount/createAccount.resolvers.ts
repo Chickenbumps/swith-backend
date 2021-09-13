@@ -1,6 +1,7 @@
 import client from "../../client";
 import { Resolvers } from "../../types";
 import bcrypt from "bcrypt";
+import moment from "moment";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -39,6 +40,8 @@ const resolvers: Resolvers = {
             password: hashedPassword,
             avatar:
               "https://swith-upload.s3.ap-northeast-2.amazonaws.com/avatar/default.png",
+            createdAt: moment().format(),
+            updatedAt: moment().format(),
           },
         });
         return {
