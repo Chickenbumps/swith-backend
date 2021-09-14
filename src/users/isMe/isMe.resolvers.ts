@@ -15,10 +15,13 @@ const resolvers: Resolvers = {
         },
       });
       // console.log(me.updatedAt, moment().format());
-      // console.log(me.updatedAt.toISOString().slice(8, 10), moment().date());
-      const meDate = me.updatedAt.slice(9, 10);
+      // console.log(
+      //   me.updatedAt.slice(5, 10),
+      //   moment().format("MM-DD").toString()
+      // );
+      const meDate = me.updatedAt.slice(5, 10);
       // console.log("isMe:", meDate, moment().date());
-      if (meDate !== moment().date().toString()) {
+      if (meDate !== moment().format("MM-DD").toString()) {
         await client.user.update({
           where: {
             id: loggedInUser.id,
