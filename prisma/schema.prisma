@@ -18,7 +18,7 @@ model User {
   email             String    @unique
   password          String
   bio               String?
-  avatar            String?
+  avatar            String
   followers         User[]    @relation("FollowRelation", references: [id])
   following         User[]    @relation("FollowRelation", references: [id])
   createdAt         String
@@ -44,6 +44,7 @@ model User {
   time              Time[]
   subjects          User[]    @relation("UserToUser", references: [id])
   isObserver        Boolean?  @default(false)
+  pushToken         String?
 }
 
 model Time {
@@ -100,7 +101,7 @@ model Group {
 model Inviter {
   id     Int     @id @default(autoincrement())
   user   User    @relation(fields: [userId], references: [id])
-  userId Int
+  userId Int     @unique
   /// @onDelete(CASACADE)
   Group  Group[]
 }

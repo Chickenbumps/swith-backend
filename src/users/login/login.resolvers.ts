@@ -5,9 +5,9 @@ import jwt from "jsonwebtoken";
 
 const resolvers: Resolvers = {
   Mutation: {
-    login: async (_, { username, password }) => {
+    login: async (_, { email, password }) => {
       try {
-        const user = await client.user.findFirst({ where: { username } });
+        const user = await client.user.findFirst({ where: { email } });
         if (!user) {
           return {
             ok: false,

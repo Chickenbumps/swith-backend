@@ -12,11 +12,12 @@ const resolvers: Resolvers = {
         { loggedInUser, client }
       ) => {
         // avatar edit
+        console.log(avatar);
         let newAvatarUri = null;
         if (avatar) {
           newAvatarUri = await uploadToS3(avatar, loggedInUser.id, "avatar");
         }
-
+        console.log(newAvatarUri);
         let newEncryptedPassword = null;
         if (password) {
           newEncryptedPassword = await bcrypt.hash(password, 10);

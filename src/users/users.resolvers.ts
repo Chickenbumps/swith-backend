@@ -56,6 +56,9 @@ const resolvers: Resolvers = {
       if (!loggedInUser) {
         return false;
       }
+      if (loggedInUser.totalNumberOfTime === 0) {
+        return 0;
+      }
       return (loggedInUser.totalTime / loggedInUser.totalNumberOfTime).toFixed(
         2
       );
@@ -63,6 +66,9 @@ const resolvers: Resolvers = {
     numberPerTime: ({ id }, _, { client, loggedInUser }) => {
       if (!loggedInUser) {
         return false;
+      }
+      if (loggedInUser.totalTime === 0) {
+        return 0;
       }
       return (loggedInUser.totalNumberOfTime / loggedInUser.totalTime).toFixed(
         2
