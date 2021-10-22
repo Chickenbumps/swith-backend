@@ -7,7 +7,7 @@ const resolvers: Resolvers = {
   Mutation: {
     createAccount: async (
       _,
-      { name, username, email, password, passwordConfirm }
+      { name, username, email, password, passwordConfirm, token }
     ) => {
       try {
         const usernameCheck = await client.user.findFirst({
@@ -42,6 +42,7 @@ const resolvers: Resolvers = {
               "https://swith-upload.s3.ap-northeast-2.amazonaws.com/avatar/default.png",
             createdAt: moment().format(),
             updatedAt: moment().format(),
+            pushToken: token,
           },
         });
         return {

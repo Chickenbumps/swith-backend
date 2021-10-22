@@ -5,6 +5,10 @@ import moment from "moment";
 const resolvers: Resolvers = {
   Query: {
     isMe: securedResolver(async (_, __, { client, loggedInUser }) => {
+      console.log(loggedInUser);
+      if (!loggedInUser.id) {
+        return;
+      }
       const me = await client.user.findFirst({
         where: {
           id: loggedInUser.id,
@@ -14,6 +18,9 @@ const resolvers: Resolvers = {
           observers: true,
         },
       });
+      if (!me) {
+        return;
+      }
       // console.log(me.updatedAt, moment().format());
       // console.log(
       //   me.updatedAt.slice(5, 10),

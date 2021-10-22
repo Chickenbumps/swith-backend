@@ -6,17 +6,23 @@ const resolvers: Resolvers = {
     pushNotification: async (_, { username }, { client, loggedInUser }) => {
       let expo = new Expo();
       let messages = [];
-      const token = await client.user.findFirst({
+      const isObserver = await client.user.findFirst({
         where: {
           username,
         },
         select: {
-          pushToken: true,
+          observers: true,
         },
       });
-      console.log("token:", token);
-      console.log(token);
-      for (let pushToken of [token.pushToken]) {
+      if (!isObserver) {
+        return {
+          ok: false,
+          error: "설정된 감시자가 없습니다.",
+        };
+      }
+      const tokens = isObserver.observers.map((item) => item.pushToken);
+
+      for (let pushToken of tokens) {
         if (!Expo.isExpoPushToken(pushToken)) {
           console.error(
             `Push token ${pushToken} is not a valid Expo push token.`
@@ -24,9 +30,9 @@ const resolvers: Resolvers = {
           continue;
         }
         messages.push({
-          to: token.pushToken,
+          to: pushToken,
           sound: "default",
-          body: "Test notification!!!!!",
+          body: `${username}이(가) 자리에 없어 집중시간이 종료되었습니다. 혼내주세요`,
           data: { withSOme: "data" },
         });
       }
@@ -78,7 +84,7 @@ const resolvers: Resolvers = {
         }
       }
 
-      if (token) {
+      if (tokens) {
         return {
           ok: true,
           message: messages,

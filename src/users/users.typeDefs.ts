@@ -31,6 +31,7 @@ export default gql`
     observers: [User]
     subjects: [User]
     isObserver: Boolean!
+    comments: [Comment]
   }
   type Time {
     id: Int!
@@ -39,5 +40,12 @@ export default gql`
     createdAt: String
     updatedAt: String!
     dayName: String!
+  }
+  type Comment {
+    id: Int!
+    user: User
+    payload: String!
+    createdAt: String!
+    upadtedAt: String!
   }
 `;

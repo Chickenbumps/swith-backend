@@ -5,7 +5,8 @@ const resolvers: Resolvers = {
   Query: {
     seeTimes: securedResolver(
       async (_, { to, from }, { client, loggedInUser }) => {
-        // console.log(to, from);
+        console.log(to, from);
+
         const timeArray = await client.time.findMany({
           where: {
             userId: loggedInUser.id,
@@ -27,6 +28,7 @@ const resolvers: Resolvers = {
           },
         });
         // console.log(timeArray);
+
         return timeArray;
       }
     ),
