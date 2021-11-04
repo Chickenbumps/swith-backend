@@ -34,7 +34,7 @@ const resolvers: Resolvers = {
           };
         }
 
-        console.log(moment().format());
+        // console.log(moment().format());
         const message = await client.message.create({
           data: {
             payload,

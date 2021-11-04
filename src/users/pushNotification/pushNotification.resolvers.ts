@@ -33,10 +33,13 @@ const resolvers: Resolvers = {
           to: pushToken,
           sound: "default",
           body: `${username}이(가) 자리에 없어 집중시간이 종료되었습니다. 혼내주세요`,
-          data: { withSOme: "data" },
+          data: {
+            withSOme: "data",
+            experienceId: "@username/example",
+            tag: `${loggedInUser.id}`,
+          },
         });
       }
-
       // batch notification
       let chunks = expo.chunkPushNotifications(messages);
       let tickets = [];

@@ -78,10 +78,10 @@ model Message {
   payload   String
   user      User    @relation(fields: [userId], references: [id])
   userId    Int
-  group     Group   @relation(fields: [groupId], references: [id])
+  group     Group?  @relation(fields: [groupId], references: [id])
   createdAt String
   updatedAt String
-  groupId   Int
+  groupId   Int?
   read      Boolean @default(false)
 }
 
