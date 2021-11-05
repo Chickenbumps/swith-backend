@@ -7,8 +7,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
-
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
 }
 
 model User {
@@ -29,18 +29,13 @@ model User {
   monthTime         Float?    @default(0)
   totalTime         Float?    @default(0)
   totalNumberOfTime Float?    @default(0)
-  // @onDelete(CASACADE)
   observers         User[]    @relation("UserToUser", references: [id])
-  /// @onDelete(CASACADE)
   comments          Comment[]
   exp               Float?    @default(0)
   maxExp            Float?    @default(10)
   groups            Group[]
-  /// @onDelete(CASACADE)
   messages          Message[]
-  /// @onDelete(CASACADE)
   inviter           Inviter?
-  /// @onDelete(CASACADE)
   time              Time[]
   subjects          User[]    @relation("UserToUser", references: [id])
   isObserver        Boolean?  @default(false)
@@ -51,7 +46,7 @@ model Time {
   id         Int    @id @default(autoincrement())
   timeValue  Float  @default(0)
   timeNumber Int    @default(0)
-  user       User   @relation(fields: [userId], references: [id])
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     Int
   createdAt  String
   updatedAt  String
@@ -66,7 +61,7 @@ model Time {
 
 model Comment {
   id        Int    @id @default(autoincrement())
-  user      User   @relation(fields: [userId], references: [id])
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    Int
   payload   String
   createdAt String
@@ -76,9 +71,9 @@ model Comment {
 model Message {
   id        Int     @id @default(autoincrement())
   payload   String
-  user      User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId    Int
-  group     Group?  @relation(fields: [groupId], references: [id])
+  group     Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt String
   updatedAt String
   groupId   Int?
@@ -92,16 +87,14 @@ model Group {
   members     User[]    @relation(references: [id])
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  /// @onDelete(CASACADE)
   messages    Message[]
-  inviter     Inviter   @relation(fields: [inviterId], references: [id])
+  inviter     Inviter   @relation(fields: [inviterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   inviterId   Int
 }
 
 model Inviter {
   id     Int     @id @default(autoincrement())
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId Int     @unique
-  /// @onDelete(CASACADE)
   Group  Group[]
 }
