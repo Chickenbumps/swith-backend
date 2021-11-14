@@ -6,7 +6,7 @@ export default gql`
     timeValue: Float!
     timeNumber: Int!
     user: User
-    createdAt: String
+    createdAt: String!
     updatedAt: String!
     dayName: String!
   }

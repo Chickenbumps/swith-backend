@@ -56,6 +56,17 @@ const resolvers: Resolvers = {
 
       return inviter;
     },
+    memberNum: async ({ id }, _, { client }) => {
+      const member = await client.group.findFirst({
+        where: {
+          id,
+        },
+        select: {
+          members: true,
+        },
+      });
+      return member.members.length;
+    },
   },
   User: {
     isObserver: async ({ id }, _, { client, loggedInUser }) => {

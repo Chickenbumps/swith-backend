@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import moment from "moment";
 
 AWS.config.update({
   credentials: {
@@ -8,7 +9,8 @@ AWS.config.update({
 });
 
 const BucketName = "swith-upload";
-
+const now = new Date();
+const Expire = new Date(now.setFullYear(now.getFullYear() + 1));
 export const uploadToS3 = async (fileUri, userId, folderName) => {
   const { filename, createReadStream } = await fileUri;
   const readStream = createReadStream();
@@ -19,6 +21,7 @@ export const uploadToS3 = async (fileUri, userId, folderName) => {
       Key: newFilename,
       ACL: "public-read",
       Body: readStream,
+      Expires: Expire,
     })
     .promise();
   return Location;

@@ -32,7 +32,7 @@ const resolvers: Resolvers = {
         messages.push({
           to: pushToken,
           sound: "default",
-          body: `${username}이(가) 자리에 없어 집중시간이 종료되었습니다. 혼내주세요`,
+          body: `${username}이(가) 자리에 없어 집중시간이 종료되었습니다. 확인이 필요합니다.`,
           data: {
             withSOme: "data",
             experienceId: "@username/example",
@@ -75,9 +75,6 @@ const resolvers: Resolvers = {
                 `There was an error sending a notification: ${message}`
               );
               if (details && details.error) {
-                // The error codes are listed in the Expo documentation:
-                // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
-                // You must handle the errors appropriately.
                 console.error(`The error code is ${details.error}`);
               }
             }

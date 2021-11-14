@@ -27,6 +27,7 @@ const resolvers: Resolvers = {
         const isMember = group.members.find(
           (member) => member.id === loggedInUser.id
         );
+
         if (!isMember) {
           return {
             ok: false,
@@ -52,7 +53,16 @@ const resolvers: Resolvers = {
             updatedAt: moment().format(),
           },
         });
+        const updateGroup = await client.group.update({
+          where: {
+            id: groupId,
+          },
+          data: {
+            updatedAt: moment().format(),
+          },
+        });
         pubsub.publish(NEW_MESSAGE, { updateMessage: { ...message } });
+
         return {
           ok: true,
           id: message.id,

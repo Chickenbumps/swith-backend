@@ -1,6 +1,7 @@
 import { Resolvers } from "../../types";
 import { securedResolver } from "../../users/users.utils";
 
+// 사실상 seeMessage
 const resolvers: Resolvers = {
   Query: {
     seeGroup: securedResolver(
@@ -29,6 +30,7 @@ const resolvers: Resolvers = {
                 createdAt: "desc",
               },
             },
+            groupAvatar: true,
           },
         });
         return group;

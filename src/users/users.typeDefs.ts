@@ -9,8 +9,8 @@ export default gql`
     password: String
     bio: String
     avatar: String!
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    createdAt: String!
+    updatedAt: String!
     followers: [User]
     following: [User]
     totalFollowers: Int!
@@ -37,7 +37,7 @@ export default gql`
     id: Int!
     timeValue: Float!
     user: User
-    createdAt: String
+    createdAt: String!
     updatedAt: String!
     dayName: String!
   }

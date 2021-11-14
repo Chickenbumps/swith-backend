@@ -1,8 +1,6 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-  scalar DateTime
-
   type Group {
     id: Int!
     title: String!
@@ -11,6 +9,10 @@ export default gql`
     messages: [Message]
     unreadMessage: Int!
     inviter: Inviter
+    groupAvatar: String
+    memberNum: Int
+    createdAt: String!
+    updatedAt: String!
   }
 
   type Message {
