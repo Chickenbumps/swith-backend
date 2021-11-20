@@ -9,7 +9,6 @@ const resolvers: Resolvers = {
         },
       });
       if (!searchUser) {
-        console.log("존재하지 않는 유저 입니다.");
         return null;
       }
       return searchUser;

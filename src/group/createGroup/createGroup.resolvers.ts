@@ -6,7 +6,6 @@ const resolvers: Resolvers = {
   Mutation: {
     createGroup: securedResolver(
       async (_, { title, description }, { client, loggedInUser }) => {
-        console.log(moment().format());
         const alreadyInviter = await client.inviter.findFirst({
           where: {
             userId: loggedInUser.id,

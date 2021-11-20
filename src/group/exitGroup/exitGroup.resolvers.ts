@@ -12,8 +12,6 @@ const resolvers: Resolvers = {
           inviter: true,
         },
       });
-      console.log("inviter:", group.inviterId);
-      console.log("mem:", memberId);
       if (group.inviter.userId === memberId) {
         const isDeleted = await client.group.delete({
           where: {
