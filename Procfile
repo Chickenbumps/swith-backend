@@ -1,2 +1,2 @@
-release: python manage.py migrate
+release: npx prisma migrate deploy
 web: npm start
