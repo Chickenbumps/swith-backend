@@ -19,6 +19,7 @@ const PORT = process.env.PORT;
   const httpServer = createServer(app);
   const server = new ApolloServer({
     schema,
+    introspection: true,
     context: async ({ req }): Promise<Context> => {
       return {
         loggedInUser: await getUser(req.headers.token),
