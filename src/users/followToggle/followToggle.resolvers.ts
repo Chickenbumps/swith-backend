@@ -17,16 +17,21 @@ const resolvers: Resolvers = {
             error: "존재하지 않는 유저 입니다.",
           };
         }
-        const isFollowing = await (
-          await client.user
-            .findUnique({
-              where: {
-                id: loggedInUser.id,
-              },
-            })
-            .following()
-        ).map((user) => user.id === targetUser.id);
-        if (!isFollowing.length) {
+        const me = await client.user.findFirst({
+          where: {
+            id: loggedInUser.id,
+          },
+          include: {
+            following: true,
+          },
+        });
+        const isFollowing = me.following.filter(
+          (item) => item.id === targetUser.id
+        );
+
+        console.log("isFollowing:", isFollowing);
+        if (isFollowing.length === 0) {
+          console.log("!isFollow");
           await client.user.update({
             where: {
               id: loggedInUser.id,
@@ -44,24 +49,26 @@ const resolvers: Resolvers = {
             ok: true,
             result: "followed",
           };
-        }
-        await client.user.update({
-          where: {
-            id: loggedInUser.id,
-          },
-          data: {
-            following: {
-              disconnect: {
-                username,
-              },
+        } else {
+          console.log("isFollow");
+          await client.user.update({
+            where: {
+              id: loggedInUser.id,
             },
-            updatedAt: moment().format(),
-          },
-        });
-        return {
-          ok: true,
-          result: "unfollowed",
-        };
+            data: {
+              following: {
+                disconnect: {
+                  username,
+                },
+              },
+              updatedAt: moment().format(),
+            },
+          });
+          return {
+            ok: true,
+            result: "unfollowed",
+          };
+        }
       }
     ),
   },

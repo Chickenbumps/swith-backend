@@ -4,10 +4,10 @@ import { securedResolver } from "../../users/users.utils";
 const resolvers: Resolvers = {
   Query: {
     seeComments: securedResolver(
-      async (_, { offset }, { client, loggedInUser }) => {
+      async (_, { userId, offset }, { client, loggedInUser }) => {
         const comments = await client.comment.findMany({
           where: {
-            userId: loggedInUser.id,
+            userId: userId,
           },
           include: {
             user: true,

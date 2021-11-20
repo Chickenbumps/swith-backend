@@ -47,5 +47,6 @@ export default gql`
     payload: String!
     createdAt: String!
     upadtedAt: String!
+    range: String!
   }
 `;

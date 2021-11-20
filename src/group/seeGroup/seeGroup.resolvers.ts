@@ -33,6 +33,22 @@ const resolvers: Resolvers = {
             groupAvatar: true,
           },
         });
+
+        const unreadMessagesIds = group.messages
+          .filter((item) => item.read === false)
+          .map((item) => item.id);
+
+        await client.message.updateMany({
+          where: {
+            id: {
+              in: unreadMessagesIds,
+            },
+          },
+          data: {
+            read: true,
+          },
+        });
+        // console.log(group.messages);
         return group;
       }
     ),

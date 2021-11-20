@@ -6,6 +6,6 @@ export default gql`
     error: String
   }
   type Mutation {
-    updateExp(exp: Int!): UpdateExpResult!
+    updateExp(exp: Float!): UpdateExpResult!
   }
 `;

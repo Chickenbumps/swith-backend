@@ -5,7 +5,13 @@ import { securedResolver } from "../../users/users.utils";
 const resolvers: Resolvers = {
   Mutation: {
     editComment: securedResolver(
-      async (_, { id, payload }, { client, loggedInUser }) => {
+      async (_, { id, payload, range }, { client, loggedInUser }) => {
+        if (!payload) {
+          return {
+            ok: false,
+            error: "내용을 입력해주세요.",
+          };
+        }
         const comment = await client.comment.findFirst({
           where: {
             id,
@@ -28,6 +34,7 @@ const resolvers: Resolvers = {
           data: {
             payload,
             updatedAt: moment().format(),
+            range,
           },
         });
         return {

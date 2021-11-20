@@ -22,6 +22,9 @@ const resolvers: Resolvers = {
             },
           },
         },
+        orderBy: {
+          updatedAt: "desc",
+        },
       });
 
       return groups;

@@ -21,7 +21,8 @@ const resolvers: SubResolvers = {
           },
         });
         if (!group) {
-          throw new Error("그룹의 멤버가 아닙니다.");
+          // throw new Error("그룹의 멤버가 아닙니다.");
+          console.log("그룹의 멤버가 아닙니다.");
         }
         return withFilter(
           () => pubsub.asyncIterator(NEW_MESSAGE),

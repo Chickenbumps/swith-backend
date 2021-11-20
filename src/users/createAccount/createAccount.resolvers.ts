@@ -37,6 +37,7 @@ const resolvers: Resolvers = {
             name,
             username,
             email,
+            bio: `안녕하세요.${username} 입니다.`,
             password: hashedPassword,
             avatar:
               "https://swith-upload.s3.ap-northeast-2.amazonaws.com/avatar/default.png",

@@ -6,6 +6,6 @@ export default gql`
     error: String
   }
   type Mutation {
-    editComment(id: Int!, payload: String!): EditCommentResult!
+    editComment(id: Int!, payload: String!, range: String!): EditCommentResult!
   }
 `;

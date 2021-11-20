@@ -5,7 +5,7 @@ import { securedResolver } from "../../users/users.utils";
 const resolvers: Resolvers = {
   Mutation: {
     createComment: securedResolver(
-      async (_, { payload }, { client, loggedInUser }) => {
+      async (_, { payload, range }, { client, loggedInUser }) => {
         if (!payload) {
           return {
             ok: false,
@@ -22,6 +22,7 @@ const resolvers: Resolvers = {
             },
             createdAt: moment().format("YYYY-MM-DD"),
             updatedAt: moment().format("YYYY-MM-DD"),
+            range,
           },
         });
         if (!comment) {
@@ -32,6 +33,7 @@ const resolvers: Resolvers = {
         }
         return {
           ok: true,
+          commentId: comment.id,
         };
       }
     ),

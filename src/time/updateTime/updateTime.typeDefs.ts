@@ -6,6 +6,6 @@ export default gql`
     error: String
   }
   type Mutation {
-    updateTime(time: Int!): UpdateTimeResult!
+    updateTime(time: Float!): UpdateTimeResult!
   }
 `;
