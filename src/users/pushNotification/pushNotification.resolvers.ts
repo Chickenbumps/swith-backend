@@ -48,7 +48,6 @@ const resolvers: Resolvers = {
       for (let chunk of chunks) {
         try {
           let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-          console.log(ticketChunk);
           tickets.push(...ticketChunk);
         } catch (error) {
           console.error(`Push Notification Error:${error}`);
@@ -65,7 +64,6 @@ const resolvers: Resolvers = {
       for (let chunk of receiptIdChunks) {
         try {
           let receipts = await expo.getPushNotificationReceiptsAsync(chunk);
-          console.log("receipts:", receipts);
           for (let receiptId in receipts) {
             let { status, details }: any = receipts[receiptId];
             if (status === "ok") {

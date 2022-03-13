@@ -7,7 +7,10 @@
     "dev": "nodemon --exec ts-node src/server --ext ts,js",
     "migrate": "prisma migrate dev",
     "studio": "prisma studio",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "clean": "tsx --build --clean",
+    "start": "node build/server"
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@babel/cli": "^7.16.0",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/schema": "^8.0.3",
     "@paljs/plugins": "^3.6.1",

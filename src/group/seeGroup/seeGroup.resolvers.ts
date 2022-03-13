@@ -6,7 +6,6 @@ const resolvers: Resolvers = {
   Query: {
     seeGroup: securedResolver(
       async (_, { id, offset }, { client, loggedInUser }) => {
-        console.log(offset);
         const group = await client.group.findFirst({
           where: {
             id,

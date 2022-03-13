@@ -13,7 +13,6 @@ const resolvers: Resolvers = {
             id: true,
           },
         });
-        console.log(isMine);
         if (!isMine) {
           return {
             ok: false,

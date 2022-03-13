@@ -70,7 +70,6 @@ const resolvers: Resolvers = {
   },
   User: {
     isObserver: async ({ id }, _, { client, loggedInUser }) => {
-      console.log("id", id);
       const observers = await client.user
         .findFirst({
           where: {
@@ -79,7 +78,6 @@ const resolvers: Resolvers = {
         })
         .observers();
       const isExist = observers.some((observer) => observer.id === id);
-      console.log(isExist);
       return isExist;
     },
   },
