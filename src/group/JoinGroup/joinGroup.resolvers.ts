@@ -6,7 +6,6 @@ const resolvers: Resolvers = {
   Mutation: {
     joinGroup: securedResolver(
       async (_, { groupId }, { client, loggedInUser }) => {
-        console.log(groupId);
         const isOk = await client.group.update({
           where: {
             id: groupId,
@@ -20,7 +19,7 @@ const resolvers: Resolvers = {
             updatedAt: moment().format(),
           },
         });
-        console.log(isOk);
+
         if (isOk) {
           return {
             ok: true,

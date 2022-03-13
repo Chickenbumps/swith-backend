@@ -29,9 +29,7 @@ const resolvers: Resolvers = {
           (item) => item.id === targetUser.id
         );
 
-        console.log("isFollowing:", isFollowing);
         if (isFollowing.length === 0) {
-          console.log("!isFollow");
           await client.user.update({
             where: {
               id: loggedInUser.id,
@@ -50,7 +48,6 @@ const resolvers: Resolvers = {
             result: "followed",
           };
         } else {
-          console.log("isFollow");
           await client.user.update({
             where: {
               id: loggedInUser.id,

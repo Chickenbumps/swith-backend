@@ -11,6 +11,8 @@ import { SubscriptionServer } from "subscriptions-transport-ws";
 import { execute, subscribe } from "graphql";
 import { schema } from "./schema";
 import { Context } from "vm";
+import { ApolloServerPluginInlineTrace } from "apollo-server-core";
+import { env } from "process";
 
 const PORT = process.env.PORT;
 
@@ -19,6 +21,13 @@ const PORT = process.env.PORT;
   const httpServer = createServer(app);
   const server = new ApolloServer({
     schema,
+    introspection: true,
+    apollo: {
+      key: env.APOLLO_KEY,
+      graphId: env.APOLLO_GRAPH_ID,
+      graphVariant: env.APOLLO_GRAPH_VARIANT,
+    },
+    plugins: [ApolloServerPluginInlineTrace()],
     context: async ({ req }): Promise<Context> => {
       return {
         loggedInUser: await getUser(req.headers.token),
@@ -37,7 +46,6 @@ const PORT = process.env.PORT;
       subscribe,
       onConnect: async ({ token }, webSocket, context) => {
         if (!token) {
-          console.log("유효하지 않은 토큰입니다. subscription error.");
           throw new Error("유효하지 않은 토큰입니다. subscription error.");
         }
         const loggedInUser = await getUser(token);

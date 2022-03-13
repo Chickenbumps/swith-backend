@@ -21,7 +21,7 @@ export const getUser = async (token) => {
       throw new Error("유효하지 않는 토큰입니다.");
     }
   } catch (e) {
-    console.log("유저 정보를 가져오는데 실패 했습니다.", e);
+    // console.log("유저 정보를 가져오는데 실패 했습니다.", e);
   }
 };
 
