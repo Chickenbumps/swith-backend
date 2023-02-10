@@ -2,8 +2,9 @@
   "compilerOptions": {
     "outDir": "build",
     "allowJs": true,
-    "lib": ["esnext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "target": "esnext",
+    "module": "commonjs"
   },
   "include": ["./src/**/*"]
 }
